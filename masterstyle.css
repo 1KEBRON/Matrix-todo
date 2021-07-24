@@ -3,12 +3,66 @@ body{
     margin: 0px;
     background-color: salmon;
     font-size: 28px;
+    color: whitesmoke;
 }
 h1{
     text-align: center;
-    color: aliceblue;
+
 }
 #input-container{
-    color: whitesmoke;
+   
     padding-left: 40%;
 }
+#vertical-header{
+
+    transform: rotate(-90deg);
+    margin-left: -45%;
+    margin-right: 70%;
+
+
+}
+
+
+.firstLabel {
+    padding-right: 45%;
+}
+#notImpLbl{
+    margin-right: 11%;
+}
+
+#output-container{
+    
+    padding-left: 25%;
+
+    color: rgb(15, 8, 24);
+
+
+}
+* {
+  box-sizing: content-box;
+}
+
+
+/* Create two equal columns that floats next to each other */
+.column {
+
+  float: left;
+  min-width: 40%;
+  min-height: auto;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+}
+/* Style the buttons */
+.button {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+

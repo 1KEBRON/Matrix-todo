@@ -1,0 +1,14 @@
+
+body{
+    margin: 0px;
+    background-color: salmon;
+    font-size: 28px;
+}
+h1{
+    text-align: center;
+    color: aliceblue;
+}
+#input-container{
+    color: whitesmoke;
+    padding-left: 40%;
+}

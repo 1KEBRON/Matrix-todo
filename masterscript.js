@@ -1,179 +1,109 @@
-// Dom - elements
-var actionItemInput = document.getElementById("actionItemInp");
-var addBtn = document.getElementById("addBtn");
-var taskContainer = document.getElementById("impUrgTask-Container");
-var ulTaskList = document.getElementById("taskListUl");
+         document.addEventListener('DOMContentLoaded', () => {
+                // button to add new item
+                let addButton = document.querySelector("#addBtn");
+                // input field to add new item
+                let addInput = document.querySelector("#actionItem");
 
-// Create array for task list if localStorage is empty
-if (JSON.parse(localStorage.getItem("taskList")) === null) {
-	var taskList = [];
-}
-// Create array for task list and populate with items from localStorage
-else {
-	var taskList = JSON.parse(localStorage.getItem("taskList"));
-	taskContainer.style.display = "block";
-}
-// Load task list from taskList array and update DOM
-if (taskList.length > 0) {
-	function loadListItems() {
-		ulTaskList.innerHTML = taskList[0];
-	}
-	loadListItems();
-}
+                let importanceCheckBox = document.getElementById("importanceCB" )
+                let urgencyCheckBox = document.getElementById("urgencyCB")
 
-function SaveTask (){
-    if(actionItemInput.value !== ""){
+                // add the svg icons for the buttons
+                let removeSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 84V56c0-13.3 10.7-24 24-24h112l9.4-18.7c4-8.2 12.3-13.3 21.4-13.3h114.3c9.1 0 17.4 5.1 21.5 13.3L312 32h112c13.3 0 24 10.7 24 24v28c0 6.6-5.4 12-12 12H12C5.4 96 0 90.6 0 84zm416 56v324c0 26.5-21.5 48-48 48H80c-26.5 0-48-21.5-48-48V140c0-6.6 5.4-12 12-12h360c6.6 0 12 5.4 12 12zm-272 68c0-8.8-7.2-16-16-16s-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208zm96 0c0-8.8-7.2-16-16-16s-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208zm96 0c0-8.8-7.2-16-16-16s-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208z"/></svg>`;
 
-        // Uppdate DOM
-        //  add new <li> aka task lists 
-        var ulTaskListItem = document.createElement("li"); // Creates <li>
-        var ulTaskListItemValue = document.createTextNode(actionItemInput.value); // Creates variable for text entered
+                let completeSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`;
 
-        var ulTaskListItemContainer = document.createElement("span"); // Creates <span>
-        ulTaskListItemContainer.setAttribute("contenteditable", "true"); // Makes <span> editable
-        ulTaskListItemContainer.appendChild(ulTaskListItemValue); // Appends value to <span>
-		ulTaskListItem.appendChild(ulTaskListItemContainer); // Appends <span> to <li>
-		
-		ulTaskList.appendChild(ulTaskListItem); // Appends <li> and text to bottom of <ul>
+                addButton.addEventListener("click", function () {
+                    // grab the value of the input tag
+                    let newItem = document.getElementById("actionItem").value;
+                    // if the input tag is not empty then run our function to add an item
+                    if (newItem) {
+                        // this function will add a new item to the todo list
+                        addItemTodo(newItem);
+                        // reset the input after we added a new item
+                        document.getElementById("actionItem").value = "";
+                    }
+                });
 
-        // -- Add remove icon
-		var iconRemove = document.createElement("i"); // Creates delete icon
-		iconRemove.setAttribute("class", "fa fa-lg fa-trash"); // Adds the classes to the delete icon
-		iconRemove.setAttribute("title", "Delete"); // Adds the classes to the delete icon
-		ulTaskListItem.appendChild(iconRemove); // Appends icon to <li>
+                // user press enter 
 
-        // -- Add highlight icon
-		var iconHighlight = document.createElement("i"); // Creates delete icon
-		iconHighlight.setAttribute("class", "fa fa-lg fa-star-o"); // Adds the classes to the delete icon
-		iconHighlight.setAttribute("title", "Toggle highlight"); // Adds the a title
-		ulTaskListItem.appendChild(iconHighlight); // Appends icon to <li>
+                addInput.addEventListener("keypress", function (e) {
+                    // did the user press *enter*? if yes then continue
+                    if (13 === e.keyCode) {
+                        // grab the value of the input tag
+                        let newItem = document.getElementById("actionItem").value;
+                        // if the input tag is not empty then run our function to add an item
+                        if (newItem) {
+                            // this function will add a new item to the todo list
+                            addItemTodo(newItem);
+                            // reset the input after we added a new item
+                            document.getElementById("actionItem").value = "";
+                        }
+                    }
+                });
 
-		// -- Add move down icon
-		var iconMoveDown = document.createElement("i"); // Creates move down icon
-		iconMoveDown.setAttribute("class", "fa fa-lg fa-angle-down"); // Adds the classes to the move down icon
-		iconMoveDown.setAttribute("title", "Move item down"); // Adds the a title
-		ulTaskListItem.appendChild(iconMoveDown); // Appends icon to <li>
+                function addItemTodo(text) {
+                    // grab the `ul`
+                    let doList = document.getElementById("doList");
+                    let scheduleList = document.getElementById("scheduleList");
+                    let delegateList = document.getElementById("delegateList");
+                    let eliminateList = document.getElementById("eliminateList");
 
-        // -- Add move up icon
-        var iconMoveUp = document.createElement("i"); // Creates up down icon
-		iconMoveUp.setAttribute("class", "fa fa-lg fa-angle-up"); // Adds the classes to the move up icon
-		iconMoveUp.setAttribute("title", "Move item up"); // Adds the a title
-		ulTaskListItem.appendChild(iconMoveUp); // Appends icon to <li>
+                    // create an `li`
+                    let item = document.createElement('li');
+                    // set the inside of our `li` the same as the parameter that we passed in the function, which is going to be the value set by the user in the input field
+                    item.innerText = text;
 
-        updateStorage(); // Update array and localStorage
+                    //create container for our buttons remove and complete
+                    let buttons = document.createElement('div');
+                    buttons.classList.add("buttons");
 
-        taskContainer.style.display = "block"; // Set list container to be visible once first item is added
-		actionItemInput.value = ""; // Remove value from input field
-		actionItemInput.focus(); // Set focus back to field
-		removeTask(); // Run remove task function to add the onclick event
-		indentTask(); // Run indent task function to add the onclick event
-		highLightTask(); // Run highlight task function to add the onclick event
-		moveItemDown(); // Run move task down function to add the onclick event
-		moveItemUp(); // Run move task up function to add the onclick event
+                    // create the two buttons
 
-    }
-}
-addBtn.addEventListener("click", SaveTask);
+                    
+                    let complete = document.createElement('button');
+                    complete.classList.add('complete');
+                    // add the SVG icon to the button
+                    complete.innerHTML = completeSVG;
+                    // add event listener for complete
+                    // this function will be defined later
+                    complete.addEventListener("click", completeItem);
 
-// Update array and localStorage
-function updateStorage() {
-	taskList.unshift(ulTaskList.innerHTML); // Update array <li>s
-	localStorage.setItem("taskList", JSON.stringify(taskList)); // Update localStorage with array	
-}
+                    // append the buttons to the div
+                    buttons.appendChild(complete);
 
-// Remove list items
-function removeTask() {
-	var ulTaskListRemoveIcons = ulTaskList.getElementsByClassName("fa-trash"); // Gets all the <li>s in the list
-	for (var i = 0; i < ulTaskListRemoveIcons.length; i++) { // Loops through <li>s in list
-		ulTaskListRemoveIcons[i].onclick = function() { // Assigns an onClick to each <li>
-			this.parentNode.remove(); // Remove the <li> that is clicked
-			updateStorage(); // Update array and localStorage				
-			if (ulTaskList.getElementsByTagName("li").length === 0) {
-				localStorage.clear();
-				taskListContainer.style.display = "none"; // Hide list container if array is empty
-			}
-		}
-	}
-}
-removeTask()
+                    // append the whole div to the li
+                    item.appendChild(buttons);
 
+                    // prepend the `li` to the `ul`
+                   
+                    if (importanceCheckBox.checked && urgencyCheckBox.checked == true) {
+                        doList.insertBefore(item, doList.childNodes[0]);
+                    }
+                    else if (importanceCheckBox.checked == true && urgencyCheckBox.checked == false) {
+                        scheduleList.insertBefore(item, scheduleList.childNodes[0]);
+                    }
+                    else if (importanceCheckBox.checked == false && urgencyCheckBox.checked == true) {
+                        delegateList.insertBefore(item, delegateList.childNodes[0]);
+                    }
+                     else {
+                        eliminateList.insertBefore(item, eliminateList.childNodes[0]);
+                    }
+                                
 
-// I want to be able to edit list items
-ulTaskList.addEventListener('keydown', function (event) {
-  var esc = event.which == 27,
-	  nl = event.which == 13,
-	  el = event.target,
-	  input = el.nodeName != 'INPUT' && el.nodeName != 'TEXTAREA',
-	  data = {};
+                 
+                }
 
-  if (input) {
-	if (esc) {
-	  // restore state
-	  ulTaskList.execCommand('undo');
-	  el.blur();
-	}
-	else if (nl) {
-		updateStorage(); // Update array and localStorage
-		el.blur();
-		event.preventDefault();
-	}
-  }
-}, true);
+                function completeItem() {
+                    // grab the `li` by targeting the parent of the parent of the button (button -> div -> li)
+                    let item = this.parentNode.parentNode;
+                    // grab the `ul` (li -> ul)
+                    let parent = item.parentNode;
+                    // grab the parent id
+                    let id = parent.id;
+                    // remove the item to its current `ul`
+                    parent.removeChild(item);
 
+                }
 
-function highLightTask() {
-	var ulTaskListHighlightIcons = ulTaskList.getElementsByClassName("fa-star-o");
-	for (var i = 0; i < ulTaskListHighlightIcons.length; i++) {
-		ulTaskListHighlightIcons[i].onclick = function () {
-			if (this.parentNode.className === "indent") {
-				this.parentNode.className += " highlight";
-			}
-			else if (this.parentNode.className === "") {
-				this.parentNode.className = "highlight";
-			}
-			else if (this.parentNode.className === "highlight") {
-				this.parentNode.className = "";
-			}
-			else {
-				this.parentNode.className = "indent";
-			}
-			updateStorage(); // Update array and localStorage
-		}
-	}
-}
-highLightTask()
-
-
-// Move list item down
-function moveItemDown() {
-	var ulTaskListItems = ulTaskList.getElementsByClassName("fa-angle-down");
-	for (var i = 0; i < ulTaskListItems.length; i++) {
-		ulTaskListItems[i].onclick = function () {
-			var currentListItem = this.parentNode; // <li> Current
-			var nextListItem = this.parentNode.nextSibling; // <li> Next
-			var list = this.parentNode.parentNode; // <ul>
-			if (nextListItem !== null) {
-				list.insertBefore(currentListItem, nextListItem.nextSibling);
-				updateStorage(); // Update array and localStorage
-			}
-		}
-	}
-}
-moveItemDown();
-
-// Move list item up
-function moveItemUp() {
-	var ulTaskListItems = ulTaskList.getElementsByClassName("fa-angle-up");
-	for (var i = 0; i < ulTaskListItems.length; i++) {
-		ulTaskListItems[i].onclick = function () {
-			var currentListItem = this.parentNode; // <li> Current
-			var prevListItem = this.parentNode.previousSibling; // <li> Previous
-			var list = this.parentNode.parentNode; // <ul>
-			if (prevListItem !== null) {
-				list.insertBefore(currentListItem, currentListItem.previousSibling);
-				updateStorage(); // Update array and localStorage
-			}
-		}
-	}
-}
-moveItemUp();
+  
+            })

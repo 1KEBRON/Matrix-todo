@@ -9,57 +9,52 @@
     <title>Eisenhower's Matrix to-do List </title>
 </head>
 <body>
+    <header>
     <h1>Eisenhower's Matrix to-do List</h1>
     <div id="input-container">
-        <form >
-        <input type="text" name="action-actionItemInp" id="actionItemInp" placeholder=" to-do list item....">
-        <button type="button" id="addBtn"> Add </button>
-        <br>
+        <input type="text" name="action-actionItemInp" id="actionItem" placeholder="Enter an activity...">
+        <button id="addBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"> <path
+                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z">
+            </path>
+        </svg>
+</button>        <br>
         <label for="importance">Important</label>
-        <input type="checkbox" name="importance" id="importance" >
+        <input type="checkbox" name="importance" id="importanceCB" >
         <label for="urgency">Urgent</label>
-        <input type="checkbox" name="urgency" id="urgency">
-        </form>
+        <input type="checkbox" name="urgency" id="urgencyCB">
+     
     </div>
-    <div id="output-container">
-       
-        <br>
-        <div id="horizontal-header">
-            <span class="firstLabel">Urgent</span>
-            <span class="secondLabel">Not Urgent</span>
-        </div>
-        <div id="vertical-header">
-            <span id="notImpLbl">Not Important</span>
-            <span id="impLbl" >Important</span>
-        </div>
-        <div class="row">
-            <div class="column" style="background-color:rgb(102, 189, 128);">
-                <h2> DO IT NOW</h2>
-                <p class="intro">Focus on these tasks first</p>
-                <div id="impUrgTask-Container">
-                    <ul id="taskListUl">
+    </header>
+    <br>
+        <section id="output-container">
+            <div class="container">
+                <div>
+                    <h4>DO: Important & Urgent</h4>
+                    <ul class="todo" id="doList"></ul>
+                </div>
+                <div>
+                    <h4>SCHEDULE: Important & Not Urgent</h4>
+                    <ul class="todo" id="scheduleList"> </ul>
+                </div>
+                <div>
+                    <h4> DELEGATE: Not Important & Urgent</h4>
+                    <ul class="todo" id="delegateList"> </ul>
 
-                    </ul>
+                </div>
+                <div>
+                   <h4>ELIMINATE: Not Important & Not Urgent</h4>
+                   <ul class="todo" id="eliminateList"> </ul>
+
                 </div>
             </div>
-            <div class="column" style="background-color:rgb(63, 193, 197);">
-                <h2>SCHEDULE IT </h2>
-                <p class="intro">Decide a time to get it done</p>
-            </div>
-        </div>
+        </section>
         
-        <div class="row">
-            <div class="column" style="background-color:rgb(207, 167, 33);">
-                <h2>DELEGATE IT</h2>
-                <p class="intro">Find someone else or push it back</p>
-            </div>
-            <div class="column" style="background-color:rgb(199, 57, 57);">
-                <h2>ELIMNIATE IT</h2>
-                <p class="intro">This becomes your <strong>"Do Not DO"</strong> List</p>
-            </div>
-        </div>
 
     </div>
+    <script>
+
+    </script>
     <script src="./masterscript.js"></script>
 </body>
 </html>

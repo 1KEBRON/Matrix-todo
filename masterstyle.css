@@ -1,67 +1,190 @@
 
+:root {
+    --font-color: #2d3436;
+    --body-bg-color: #f7f1e3;
+    --container-bg-color: #55efc4;
+    --todo-bg-color: rgb(241, 250, 204);
+    --done-bg-color: #2ed573;
+    --svg-normal-color: #2d3436;
+    --svg-hover-color: #0984e3;
+    --svg-complete-color: #0984e3;
+    --svg-remove-color: #d63031;
+    --svg-remove-hover-color: #ff4757;
+}
+
+
+
+
+
+
+
+/* this one will add the underline that you can see in the screenshot */
+
+h4::after {
+    content: "";
+    border-bottom: 5px solid black;
+    display: block;
+    width: auto;
+}
+
+
+
+
+/* give some simple styling to our `input` tag */
+
+header input {
+    min-height: 20px;
+    min-width: 20px;
+    border: none;
+
+}
+
+header button {
+  min-height: 20px;
+    width: 40px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+}
+
+li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: var(--todo-bg-color);
+    padding: 2%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+li .buttons {
+    min-width: 50px;
+    margin-left: auto;
+    display: inline;
+}
+
+li .buttons button {
+    background: none;
+    min-width: 40px;
+    border: none;
+    font-size: 2rem;
+}
+
+
+/* apply a different style to the completed tasks */
+
+.completed li {
+    background-color: var(--done-bg-color);
+}
+
+.completed .complete svg path {
+    fill: var(--svg-complete-color);
+}
+
+svg {
+    max-width: 25px;
+}
+
+
+/* define the normal color */
+
+svg path {
+    fill: var(--svg-normal-color);
+}
+
+
+/* change the color when we hover the icons*/
+
+button:hover svg path {
+    fill: var(--svg-hover-color);
+}
+
+
+/* make the remove icon red*/
+
+.remove svg path {
+    fill: var(--svg-remove-color);
+}
+
+
+/* make the remove icon a different color on hover */
+
+.remove:hover svg path {
+    fill: var(--svg-remove-hover-color);
+}
 body{
     margin: 0px;
     background-color: salmon;
     font-size: 28px;
-    color: whitesmoke;
+    color: rgb(0, 0, 0);
 }
 h1{
     text-align: center;
+    color: whitesmoke;
 
 }
+h4 { text-align: center; color: rgba(0,0,0,0.5); }
+
 #input-container{
    
     padding-left: 40%;
 }
-#vertical-header{
-
-    transform: rotate(-90deg);
-    margin-left: -45%;
-    margin-right: 70%;
 
 
-}
 
 
-.firstLabel {
-    padding-right: 45%;
-}
-#notImpLbl{
-    margin-right: 11%;
-}
 
 #output-container{
-    padding-left: 25%;
-
-    color: rgb(15, 8, 24);
-
+  color: rgb(17, 6, 13);
+     margin-left: 10%;
+     margin-bottom: 10%;
 
 }
 * {
-  box-sizing: content-box;
+  box-sizing: border-box;
+  ;
+}
+.container div{
+  max-width: 550px;
+  max-height: 300px;
+
+}
+.container div:nth-child(1) {
+  background: #f0f9cd;
+  overflow-y: scroll;
+}
+.container div:nth-child(2) {
+  background: #ffbdc5;
+    overflow-y: scroll;
+}
+.container div:nth-child(3) {
+  background: #d9eff9;
+    overflow-y: scroll;
+} 
+.container div:nth-child(4) {
+  background: #e5e5e5;
+    overflow-y: scroll;
 }
 
 
-/* Create two equal columns that floats next to each other */
-.column {
-
-  float: left;
-  min-width: 40%;
-  min-height: auto;
-  padding: 10px;
+@media (min-width: 400px) {
+  #output-container > .container {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(60px, auto);
+  }
+  #output-container h2 {
+    grid-column: 1 / -1;
+  }
+  #output-container > .container div {
+    grid-column: span 2;
+  }
 }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
+@media (min-width: 900px) {
+  #output-container > .container div {
+    grid-column: span 2;
+  }
 }
-/* Style the buttons */
-.button {
-  border: none;
-  outline: none;
-  padding: 12px 16px;
-  background-color: #f1f1f1;
-  cursor: pointer;
-}
-

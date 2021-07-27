@@ -59,14 +59,7 @@
 
                     // create the two buttons
 
-                    let remove = document.createElement('button');
-                    remove.classList.add('remove');
-                    // add the SVG icon to the button
-                    remove.innerHTML = removeSVG;
-                    // add event listener for remove
-                    // this function will be definedd later
-                    remove.addEventListener("click", removeItem);
-
+                    
                     let complete = document.createElement('button');
                     complete.classList.add('complete');
                     // add the SVG icon to the button
@@ -76,7 +69,6 @@
                     complete.addEventListener("click", completeItem);
 
                     // append the buttons to the div
-                    buttons.appendChild(remove);
                     buttons.appendChild(complete);
 
                     // append the whole div to the li
@@ -108,20 +100,10 @@
                     let parent = item.parentNode;
                     // grab the parent id
                     let id = parent.id;
-
-                    // check if the item should go in the completed or if it should be re-added to todo by using a ternary operator
-                    let target = (id === "todo") ? document.getElementById("completed") : document.getElementById("todo");
                     // remove the item to its current `ul`
                     parent.removeChild(item);
 
                 }
 
-                function removeItem() {
-                    // grab the `li` by targeting the parent of the parent of the button (button -> div -> li)
-                    let item = this.parentNode.parentNode;
-                    // grab the `ul` (li -> ul)
-                    let parent = item.parentNode;
-                    // remove `li` from `ul`
-                    parent.removeChild(item);
-                }
+  
             })
